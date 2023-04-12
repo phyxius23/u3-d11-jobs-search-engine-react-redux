@@ -1,6 +1,7 @@
 export const ADD_TO_FAVOURITE = 'ADD_TO_FAVOURITE';
 export const REMOVE_FROM_FAVOURITE = 'REMOVE_FROM_FAVOURITE';
 export const GET_JOBS = 'GET_JOBS';
+export const GET_COMPANY = 'GET_COMPANY';
 
 // action creators
 export const addToFavouriteAction = (company_name) => {
@@ -25,6 +26,22 @@ export const getJobsAction = (baseEndpoint, query) => {
     } catch (error) {
       console.log(error);
     }
+  }
+}
 
+export const getCompanyAction = (baseEndpoint, paramsCompany) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await fetch(baseEndpoint + paramsCompany);
+      if (response.ok) {
+        const { data } = await response.json();
+        console.log(data)
+        dispatch({type: GET_COMPANY, payload: data});
+      } else {
+        alert("Error fetching results");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
